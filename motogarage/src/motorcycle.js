@@ -1,5 +1,9 @@
 import React from 'react';
 import _ from 'lodash';
+import ModPoint from './mod-point';
+
+// Note this is hard-coded in css:
+const MOD_POINT_WIDTH = 25;
 
 class Motorcycle extends React.Component{
 
@@ -17,13 +21,10 @@ class Motorcycle extends React.Component{
     let points = _.cloneDeep(this.state.points);
     let parent = ev.target.parentElement;
 
-    let pctLeft = ((ev.pageX - parent.offsetLeft) / ev.target.width) * 100;
-    let pctTop = ((ev.pageY - parent.offsetTop) / ev.target.height) * 100;
-
-    /*
-    let x = ev.pageX - parent.offsetLeft;
-    let y = ev.pageY - parent.offsetTop;
-    */
+    let pctLeft = ((ev.pageX - parent.offsetLeft - MOD_POINT_WIDTH/2)
+      / ev.target.width) * 100;
+    let pctTop = ((ev.pageY - parent.offsetTop - MOD_POINT_WIDTH/2)
+      / ev.target.height) * 100;
 
     let newPoint = {
       x: pctLeft,
@@ -41,13 +42,9 @@ class Motorcycle extends React.Component{
     return <div style={{position: 'relative'}}>
       <img alt="motorcycle" src="/noun_869250_cc.svg" onClick={this.onClick} />
       {
-        this.state.points.map(function(point){
-          return <span style={{
-            position: 'absolute',
-            left: `${point.x}%`,
-            top: `${point.y}%`
-          }}>POINT</span>
-        })
+        this.state.points.map((point, index) => (
+          <ModPoint key={index} left={point.x} top={point.y} />
+        ))
       }
     </div>;
   }
