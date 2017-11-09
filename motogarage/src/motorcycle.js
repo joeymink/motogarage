@@ -1,6 +1,7 @@
 import React from 'react';
 import _ from 'lodash';
 import ModPoint from './mod-point';
+import { Button } from 'react-bootstrap';
 
 // Note this is hard-coded in css:
 const MOD_POINT_WIDTH = 25;
@@ -11,13 +12,16 @@ class Motorcycle extends React.Component{
     super(props);
 
     this.state = {
-      points: []
+      points: [],
+      mode_add: false
     };
 
     _.bindAll(this, 'onClick');
   }
 
   onClick(ev){
+    if (!this.state.mode_add) return;
+
     let points = _.cloneDeep(this.state.points);
     let parent = ev.target.parentElement;
 
@@ -39,14 +43,25 @@ class Motorcycle extends React.Component{
   }
 
   render(){
-    return <div style={{position: 'relative'}}>
-      <img alt="motorcycle" src="/noun_869250_cc.svg" onClick={this.onClick} />
+    return <div>
+
+      <Button disabled={this.state.mode_add}
+        onClick={()=>this.setState({mode_add: true})}>Add</Button>
       {
-        this.state.points.map((point, index) => (
-          <ModPoint key={index} left={point.x} top={point.y} />
-        ))
+        this.state.mode_add ? <Button
+          onClick={()=>this.setState({mode_add: false})}>Cancel</Button>
+          : null
       }
-    </div>;
+
+      <div style={{position: 'relative'}}>
+        <img alt="motorcycle" src="/noun_869250_cc.svg" onClick={this.onClick} />
+        {
+          this.state.points.map((point, index) => (
+            <ModPoint key={index} left={point.x} top={point.y} />
+          ))
+        }
+      </div>
+    </div>
   }
 
 }
