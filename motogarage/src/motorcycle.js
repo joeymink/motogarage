@@ -31,6 +31,7 @@ class Motorcycle extends React.Component{
       / ev.target.height) * 100;
 
     let newPoint = {
+      id: Math.random(), // TODO: better unique id?
       x: pctLeft,
       y: pctTop
     };
@@ -57,7 +58,7 @@ class Motorcycle extends React.Component{
         <img alt="motorcycle" src="/noun_869250_cc.svg" onClick={this.onClick} />
         {
           this.state.points.map((point, index) => (
-            <ModPoint key={index} left={point.x} top={point.y} />
+            <ModPoint key={index} left={point.x} top={point.y} id={point.id} />
           ))
         }
       </div>
