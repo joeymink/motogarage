@@ -3,6 +3,7 @@ import _ from 'lodash';
 import ModPoint from './mod-point';
 import ViewSelector from './view-selector'
 import { Button, Row, Col } from 'react-bootstrap';
+import model from './models';
 
 // Note this is hard-coded in css:
 const MOD_POINT_WIDTH = 25;
@@ -41,6 +42,7 @@ class Motorcycle extends React.Component{
     };
 
     points.push(newPoint);
+    model.addPoint(pctLeft, pctTop, this.state.view, newPoint.id);
 
     this.setState({
       points: points
@@ -54,6 +56,7 @@ class Motorcycle extends React.Component{
   }
 
   getImageUrl(){
+    // TODO: add images to the model
     switch(this.state.view){
       case 'left': return '/noun_869250_cc_mirrored.png';
       case 'right': return '/noun_869250_cc.svg';
@@ -67,6 +70,7 @@ class Motorcycle extends React.Component{
         <Col xsOffset={4} xs={4}>
           <ViewSelector onViewChange={this.onViewChange} />
         </Col>
+
         <Col xs={4}>
           <Button disabled={this.state.mode_add}
             onClick={()=>this.setState({mode_add: true})}>Add</Button>
@@ -75,6 +79,10 @@ class Motorcycle extends React.Component{
               onClick={()=>this.setState({mode_add: false})}>Cancel</Button>
               : null
           }
+
+          <Button onClick={ ()=>{console.log(JSON.stringify(model))} } >
+            Export
+          </Button>
         </Col>
       </Row>
 
@@ -85,7 +93,7 @@ class Motorcycle extends React.Component{
           _.filter(this.state.points, (p)=>(p.view === this.state.view))
             .map((point, index) => (
               <ModPoint key={index} left={point.x} top={point.y}
-                id={point.id} />
+                id={point.id} view={this.state.view} />
             ))
         }
       </div>

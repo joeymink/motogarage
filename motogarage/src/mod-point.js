@@ -4,6 +4,7 @@ import { Button, OverlayTrigger, Popover, Glyphicon, Row, Col }
   from 'react-bootstrap';
 import NewModForm from './new-mod-form';
 import NewTodoForm from './new-todo-form';
+import model from './models';
 
 require('./mod-point.css');
 
@@ -33,6 +34,7 @@ class ModPoint extends React.Component{
     // TODO: submit new mod via API
     let mods = _.cloneDeep(this.state.mods);
     mods.push(mod);
+    model.addMod(mod.name, mod.make, this.props.view, this.props.id);
     this.setState({
       mods: mods,
       current_activity: null
