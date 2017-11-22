@@ -2,7 +2,7 @@ import React from 'react';
 import _ from 'lodash';
 import ModPoint from './mod-point';
 import ViewSelector from './view-selector'
-import { Button } from 'react-bootstrap';
+import { Button, Row, Col } from 'react-bootstrap';
 
 // Note this is hard-coded in css:
 const MOD_POINT_WIDTH = 25;
@@ -63,15 +63,20 @@ class Motorcycle extends React.Component{
 
   render(){
     return <div>
-      <ViewSelector onViewChange={this.onViewChange} />
-
-      <Button disabled={this.state.mode_add}
-        onClick={()=>this.setState({mode_add: true})}>Add</Button>
-      {
-        this.state.mode_add ? <Button
-          onClick={()=>this.setState({mode_add: false})}>Cancel</Button>
-          : null
-      }
+      <Row>
+        <Col xsOffset={4} xs={4}>
+          <ViewSelector onViewChange={this.onViewChange} />
+        </Col>
+        <Col xs={4}>
+          <Button disabled={this.state.mode_add}
+            onClick={()=>this.setState({mode_add: true})}>Add</Button>
+          {
+            this.state.mode_add ? <Button
+              onClick={()=>this.setState({mode_add: false})}>Cancel</Button>
+              : null
+          }
+        </Col>
+      </Row>
 
       <div style={{position: 'relative'}}>
         <img alt={`motorcycle_${this.state.view}`} src={this.getImageUrl()}
