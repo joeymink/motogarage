@@ -10,6 +10,8 @@
     "react-scripts": "0.9.x"
   },
   "devDependencies": {
+    "enzyme": "^3.2.0",
+    "enzyme-adapter-react-16": "^1.1.0",
     "react-test-renderer": "^16.2.0"
   },
   "scripts": {

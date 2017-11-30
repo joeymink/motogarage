@@ -8,7 +8,8 @@ class ViewSelector extends React.Component{
       {
         ['left', 'right'].map(
           (name)=>
-            (<Button key={name} onClick={ ()=>{ fn(name) } } >{name}</Button>)
+            (<Button key={name} className={`view-${name}`} onClick={
+              ()=>{ fn(name) } } >{name}</Button>)
         )
       }
     </div>;
